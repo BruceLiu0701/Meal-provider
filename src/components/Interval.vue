@@ -76,7 +76,7 @@
                 let noProvider='0';
                 let provider='1'
                 this.weekday_start=provider.repeat(index-1).concat(noProvider.repeat(48-index+1)) //拼成新字串
-                if(this.weekday_end[index-1]!=='0'&&index!==0){
+                if(this.weekday_end[index-1]!=='0'&&index!==1){
                     this.end=e.target.innerHTML
                     this.rightList=false
                     this.rightIcon.rotation=false
