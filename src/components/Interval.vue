@@ -14,7 +14,7 @@
           <div class="right" @click="showRight" :style="{borderRadius:rightRadius}">
               <p>{{end}}</p>
               <span class="material-symbols-outlined" :class="rightIcon">arrow_drop_down</span>
-              <ol v-show="rightList" @click.stop="endTime">
+              <ol v-show="rightList" @click.stop="endTime" @mouse-leave="changeState">
                 <!-- 遍歷li, 生成48個 -->
                 <li v-for="i in 48" :key="i" :class="weekday_end[i-1]==='0'?'notAllowed':''">
                     {{Math.floor((i-1)/2)<10?'0'+Math.floor((i-1)/2):Math.floor((i-1)/2)}}:{{i%2===0?'30':'00'}}
@@ -32,7 +32,7 @@
         data() {
             return {
                 weekday_start:'111111111111111111111111111111111111111111111111',
-                weekday_end:'111111111111111111111111111111111111111111111111', // 指定資料儲存結構, 0表示不供餐時段, 1供餐
+                weekday_end:'011111111111111111111111111111111111111111111111', // 指定資料儲存結構, 0表示不供餐時段, 1供餐
                 leftList:false,              // 是否展示左方時間選擇框
                 rightList:false,             // 是否展示右方時間選擇框
                 initial:'00:00',             // 選擇的起始時間, 預設00:00
@@ -49,6 +49,10 @@
             },
             // 右方清單出現與隱藏
             showRight(){
+                this.rightIcon.rotation=!this.rightIcon.rotation
+                this.rightList=!this.rightList
+            },
+            changeState(){
                 this.rightIcon.rotation=!this.rightIcon.rotation
                 this.rightList=!this.rightList
             },
@@ -72,7 +76,7 @@
                 let noProvider='0';
                 let provider='1'
                 this.weekday_start=provider.repeat(index-1).concat(noProvider.repeat(48-index+1)) //拼成新字串
-                if(this.weekday_end[index-1]!=='0'){
+                if(this.weekday_end[index-1]!=='0'&&index!==0){
                     this.end=e.target.innerHTML
                     this.rightList=false
                     this.rightIcon.rotation=false
