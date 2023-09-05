@@ -71,7 +71,7 @@
                 const index=Number(newArr[0])*2+(Number(newArr[1])===30?2:1)
                 let noProvider='0';
                 let provider='1'
-                this.weekday_start=provider.repeat(index-1).concat(noProvider.repeat(48-index-1)) //拼成新字串
+                this.weekday_start=provider.repeat(index-1).concat(noProvider.repeat(48-index+1)) //拼成新字串
                 if(this.weekday_end[index-1]!=='0'){
                     this.end=e.target.innerHTML
                     this.rightList=false
