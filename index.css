@@ -11,4 +11,5 @@ body,html{
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgb(238, 247, 244);
 }
