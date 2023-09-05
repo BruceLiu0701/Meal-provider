@@ -14,7 +14,7 @@
           <div class="right" @click="showRight" :style="{borderRadius:rightRadius}">
               <p>{{end}}</p>
               <span class="material-symbols-outlined" :class="rightIcon">arrow_drop_down</span>
-              <ol v-show="rightList" @click.stop="endTime" @mouse-leave="changeState">
+              <ol v-show="rightList" @click.stop="endTime">
                 <!-- 遍歷li, 生成48個 -->
                 <li v-for="i in 48" :key="i" :class="weekday_end[i-1]==='0'?'notAllowed':''">
                     {{Math.floor((i-1)/2)<10?'0'+Math.floor((i-1)/2):Math.floor((i-1)/2)}}:{{i%2===0?'30':'00'}}
@@ -52,10 +52,6 @@
                 this.rightIcon.rotation=!this.rightIcon.rotation
                 this.rightList=!this.rightList
             },
-            changeState(){
-                this.rightIcon.rotation=!this.rightIcon.rotation
-                this.rightList=!this.rightList
-            },
             // 選擇起始時間的函式
             initialTime(e){
                 const newArr=e.target.innerHTML.split(':');
@@ -75,7 +71,7 @@
                 const index=Number(newArr[0])*2+(Number(newArr[1])===30?2:1)
                 let noProvider='0';
                 let provider='1'
-                this.weekday_start=provider.repeat(index-1).concat(noProvider.repeat(48-index+1)) //拼成新字串
+                this.weekday_start='0' + provider.repeat(index-1).concat(noProvider.repeat(48-index)) //拼成新字串
                 if(this.weekday_end[index-1]!=='0'&&index!==1){
                     this.end=e.target.innerHTML
                     this.rightList=false
