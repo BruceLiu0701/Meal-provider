@@ -5,7 +5,7 @@
               <span class="material-symbols-outlined" :class="leftIcon">arrow_drop_down</span>
               <ol v-show="leftList" @click.stop="initialTime">
                 <!-- 遍歷li, 生成48個 -->
-                <li v-for="i in 48" :key="i" >
+                <li v-for="i in 48" :key="i" :class="weekday_start[i]==='0'?'notAllowed':''">
                     {{Math.floor((i-1)/2)<10?'0'+Math.floor((i-1)/2):Math.floor((i-1)/2)}}:{{i%2===0?'30':'00'}}
                 </li> 
               </ol>
@@ -16,7 +16,7 @@
               <span class="material-symbols-outlined" :class="rightIcon">arrow_drop_down</span>
               <ol v-show="rightList" @click.stop="endTime">
                 <!-- 遍歷li, 生成48個 -->
-                <li v-for="i in 48" :key="i" :class="week_day[i-1]==='0'?'notAllowed':''">
+                <li v-for="i in 48" :key="i" :class="weekday_end[i-1]==='0'?'notAllowed':''">
                     {{Math.floor((i-1)/2)<10?'0'+Math.floor((i-1)/2):Math.floor((i-1)/2)}}:{{i%2===0?'30':'00'}}
                 </li>  
               </ol>
@@ -31,7 +31,8 @@
         props:['appear'],
         data() {
             return {
-                week_day:'111111111111111111111111111111111111111111111111', // 指定資料儲存結構, 0表示不供餐時段, 1供餐
+                weekday_start:'111111111111111111111111111111111111111111111111',
+                weekday_end:'111111111111111111111111111111111111111111111111', // 指定資料儲存結構, 0表示不供餐時段, 1供餐
                 leftList:false,              // 是否展示左方時間選擇框
                 rightList:false,             // 是否展示右方時間選擇框
                 initial:'00:00',             // 選擇的起始時間, 預設00:00
@@ -53,23 +54,29 @@
             },
             // 選擇起始時間的函式
             initialTime(e){
-                this.initial=e.target.innerHTML
+                
                 const newArr=e.target.innerHTML.split(':');
                 const index=Number(newArr[0])*2+(Number(newArr[1])===30?2:1)
                 let noProvider='0';
                 let provider='1'
-                this.week_day=noProvider.repeat(index).concat(provider.repeat(48-index)) //拼成新字串
-                this.leftList=false
-                this.leftIcon=false
+                this.weekday_end=noProvider.repeat(index).concat(provider.repeat(48-index)) //拼成新字串
+                if(this.weekday_start[index]!=='0'){
+                    this.initial=e.target.innerHTML
+                    this.leftList=false
+                    this.leftIcon.rotation=false
+                }
             },
             // 選擇結束時間的函式
             endTime(e){
                 const newArr=e.target.innerHTML.split(':');
                 const index=Number(newArr[0])*2+(Number(newArr[1])===30?2:1)
-                if(this.week_day[index-1]!=='0'){
+                let noProvider='0';
+                let provider='1'
+                this.weekday_start=provider.repeat(index).concat(noProvider.repeat(48-index)) //拼成新字串
+                if(this.weekday_end[index-1]!=='0'){
                     this.end=e.target.innerHTML
                     this.rightList=false
-                    this.rightIcon=false
+                    this.rightIcon.rotation=false
                 }  
             }
         },
