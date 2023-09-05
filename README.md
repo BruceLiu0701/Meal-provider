@@ -19,3 +19,6 @@
 1. Vue學習更完整之後，︀使用進階的數據管理方式(vuex，pubsub等)，︀而不是使用props傳遞數據的方式，且程式碼追求更乾淨簡潔
 
 四、網頁截圖 : 
+
+![bg](https://github.com/BruceLiu0701/Meal-provider/assets/130199748/94edd692-415d-4a20-b308-2b8dc5693021)
+
