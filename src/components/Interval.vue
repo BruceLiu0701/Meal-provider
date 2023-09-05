@@ -58,8 +58,8 @@
                 const index=Number(newArr[0])*2+(Number(newArr[1])===30?2:1)
                 let noProvider='0';
                 let provider='1'
-                this.weekday_end=noProvider.repeat(index).concat(provider.repeat(48-index)) //拼成新字串
                 if(this.weekday_start[index-1]!=='0'){
+                    this.weekday_end='0'+noProvider.repeat(index-1).concat(provider.repeat(48-index)) //拼成新字串
                     this.initial=e.target.innerHTML
                     this.leftList=false
                     this.leftIcon.rotation=false
@@ -68,11 +68,11 @@
             // 選擇結束時間的函式
             endTime(e){
                 const newArr=e.target.innerHTML.split(':');
-                const index=Number(newArr[0])*2+(Number(newArr[1])===30?2:1)
+                const index=Number(newArr[0])*2+(Number(newArr[1])===0?1:2)
                 let noProvider='0';
                 let provider='1'
-                this.weekday_start='0' + provider.repeat(index-1).concat(noProvider.repeat(48-index)) //拼成新字串
-                if(this.weekday_end[index-1]!=='0'&&index!==1){
+                if(this.weekday_end[index-1]!=='0' && index!==1){
+                    this.weekday_start=provider.repeat(index-1).concat(noProvider.repeat(48-index+1)) //拼成新字串
                     this.end=e.target.innerHTML
                     this.rightList=false
                     this.rightIcon.rotation=false
